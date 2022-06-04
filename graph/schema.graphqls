@@ -4,25 +4,42 @@
 
 type Work {
   id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+  startTime: Date!
+  endTime: Date
+  timeAccount: TimeAccount!
+  text: String
 }
 
-type User {
+type TimeAccount {
   id: ID!
   name: String!
 }
 
-type Query {
-  todos: [Todo!]!
+enum DayState {
+  WORK
+  HOLIDAY
+  SICK
+  PUBLIC_HOLIDAY
 }
 
-input NewTodo {
-  text: String!
-  userId: String!
+type Days {
+  date: Date!
+  dayState: DayState!
+}
+
+type Query {
+  works: [Work!]!
+}
+
+input InputWork {
+  startTime: Date
+  endTime: Date
+  timeAccount: TimeAccount
+  text: String
 }
 
 type Mutation {
   createTodo(input: NewTodo!): Todo!
+  startWork(input: InputWork): Work!
+  endWork(input: InputWork): Work!
 }
